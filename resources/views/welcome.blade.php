@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>testing</title>
+    <title>welcome</title>
 </head>
 <body>
-    <h1>This is a test</h1>
-    sussy baka
+    <h1>welcome to the juke box!</h1>
+    please log in or register a new account to listnen to the best songs on earth!
 </body>
 </html>
