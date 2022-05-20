@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class SongsTableSeeder extends Seeder
 {
@@ -13,6 +15,12 @@ class SongsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(app/song::class, 50)->create();
+        for ($i=2; $i < 12; $i++) { 
+            DB::table('songs')->insert([
+            'name' => Str::random(10),
+            'length' => rand(30,500),
+            'user_id' => $i,
+            ]);
+        }
     }
 }
