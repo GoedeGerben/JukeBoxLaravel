@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/home', function () {
+    return view('homePage');
+})->middleware('auth.basic');
+
+Route::get('/logout', [UserController::class, 'logout'], function () {
+    return view('logOut');
+})->middleware('auth.basic');
+
+Route::get('/song', function () {
+    return view('song');
+})->middleware('auth.basic');
