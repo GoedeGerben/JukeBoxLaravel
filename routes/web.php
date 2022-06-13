@@ -29,3 +29,15 @@ Route::get('/logout', [UserController::class, 'logout'], function () {
 Route::get('/song', function () {
     return view('song');
 })->middleware('auth.basic');
+
+Route::get('/lists', function () {
+    return view('list');
+})->middleware('auth.basic');
+
+Route::get('/genres', function () {
+    return view('genres');
+})->middleware('auth.basic');
+
+Route::get('/currentList', function () {
+    return view('currentList');
+})->middleware('auth.basic');
