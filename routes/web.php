@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,30 +20,35 @@ use App\Http\Controllers\RegisterController;
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/', function () {
+Route::post('/logout', [LogoutController::class, 'store']);
+
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'store']);
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
 Route::get('/home', function () {
     return view('homePage');
-})->middleware('auth.basic');
+})->middleware('auth');
 
 Route::get('/logout', [UserController::class, 'logout'], function () {
     return view('logOut');
-})->middleware('auth.basic');
+})->middleware('auth');
 
 Route::get('/song', function () {
     return view('song');
-})->middleware('auth.basic');
+})->middleware('auth');
 
 Route::get('/lists', function () {
     return view('list');
-})->middleware('auth.basic');
+})->middleware('auth');
 
 Route::get('/genres', function () {
     return view('genres');
-})->middleware('auth.basic');
+})->middleware('auth');
 
 Route::get('/currentList', function () {
     return view('currentList');
-})->middleware('auth.basic');
+})->middleware('auth');
