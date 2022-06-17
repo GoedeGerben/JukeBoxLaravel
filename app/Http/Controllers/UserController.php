@@ -24,4 +24,11 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function index()
+    {
+        $users = DB::table('users')->get();
+ 
+        return view('user.index', ['users' => $users]);
+    }
 }
