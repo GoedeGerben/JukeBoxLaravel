@@ -20,6 +20,7 @@ class SongsTableSeeder extends Seeder
             'name' => Str::random(10),
             'length' => rand(30,500),
             'user_id' => $i,
+            'genre_id' => rand(1,5),
             'created_at' => now(),
             'updated_at' => now(),
             ]);

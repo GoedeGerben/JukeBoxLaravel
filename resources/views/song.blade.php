@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>welcome to the juke box! These are all of the songs for this genre.</h1>
-    <h2>Current genre: </h2>
+    <h2>Current genre: {{ $genre->name }}</h2>
     <a href="/logout">log out</a><br>
     <a href="/home">Home Page</a><br>
     <a href="/lists">your lists</a><br>
@@ -13,10 +13,12 @@
 
     @if ($songs->count())
         @foreach ($songs as $song)
-        <div>
-            <a href="">{{ $song->name }}</a>
-        </div>
+                <div>
+                    <a href="">{{ $song->name }}</a>
+                </div>
         @endforeach
+
+        @else
     @endif
 </body>
 </html>

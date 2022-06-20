@@ -43,7 +43,7 @@ Route::get('/logout', [UserController::class, 'logout'], function () {
     return view('logOut');
 })->middleware('auth');
 
-Route::get('/song', [SongController::class, 'index'])->middleware('auth');
+Route::get('/songs/{genre:name}', [SongController::class, 'index'])->name('songs')->middleware('auth');
 
 Route::get('/lists', function () {
     return view('list');
