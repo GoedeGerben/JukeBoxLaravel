@@ -12,8 +12,9 @@ class SongController extends Controller
 {
     public function index()
     {
-        $users = DB::table('songs')->get();
- 
-        return view('user.index', ['songs' => $songs]);
+        $songs = Song::get();
+        return view('song',[
+            'songs'=> $songs
+    ]);
     }
 }
