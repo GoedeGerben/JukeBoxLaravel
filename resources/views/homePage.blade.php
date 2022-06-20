@@ -4,7 +4,7 @@
     <title>welcome</title>
 </head>
 <body>
-    <h1>welcome to the juke box!</h1>
+    <h1>welcome to the juke box {{ auth()->user()->name }}!</h1>
     <form action="/logout" method="post">
         @csrf
         <button type="submit">log out</button>

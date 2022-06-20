@@ -5,6 +5,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\ListController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +29,15 @@ Route::post('/logout', [LogoutController::class, 'store']);
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('homePage');
-})->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
 
 Route::get('/logout', [UserController::class, 'logout'], function () {
     return view('logOut');

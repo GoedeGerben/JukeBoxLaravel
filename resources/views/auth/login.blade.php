@@ -35,6 +35,13 @@
         </div>
 
         <div>
+            <div>
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember">remember me</label>
+            </div>
+        </div>
+
+        <div>
             <button type="submit">Log in</button>
         </div>
     </form>
