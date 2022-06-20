@@ -51,9 +51,7 @@ Route::get('/lists', function () {
     return view('list');
 })->middleware('auth');
 
-Route::get('/genres', function () {
-    return view('genres');
-})->middleware('auth');
+Route::get('/genres', [GenreController::class, 'index'])->middleware('auth');
 
 Route::get('/currentList', function () {
     return view('currentList');
