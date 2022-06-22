@@ -13,7 +13,7 @@
     @if ($genres->count())
         @foreach ($genres as $genre)
         <div>
-            <a href="songs/{{ $genre->name }}">{{ $genre->name }}</a>
+            <a href="genre/{{ $genre->name }}">{{ $genre->name }}</a>
         </div>
         @endforeach
     @endif
