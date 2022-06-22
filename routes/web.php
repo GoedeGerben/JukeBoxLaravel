@@ -56,3 +56,7 @@ Route::get('/genres', [GenreController::class, 'index'])->middleware('auth');
 Route::get('/currentList', function () {
     return view('currentList');
 })->middleware('auth');
+
+Route::post('/addToList', [ListController::class, 'addToList'])->middleware('auth');
+Route::get('/lists', [ListController::class, 'showList'])->middleware('auth');
+

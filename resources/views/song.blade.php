@@ -15,7 +15,11 @@
         <p>duur: {{ $song->length }}</p>
         <p>artiest: {{ $song->user_id }}</p>
         <p>genre: {{ $genre->name }}</p>
-        <p></p>
     </div>
+    <form action="/addToList" method="post">
+        @csrf
+        <input type="hidden" name="song_id" id="id" value="{{ $song->id }}"></input>
+        <button type="submit">Add song to playlist</button>
+    </form>
 </body>
 </html>
