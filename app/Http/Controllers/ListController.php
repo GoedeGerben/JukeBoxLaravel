@@ -24,4 +24,16 @@ class ListController extends Controller
             'songs'=> $songs
         ]);
     }
+
+    public function flushList(Request $request)
+    {
+        $request->session()->forget('songs.song');
+        return redirect('/lists');
+    }
+
+    public function forgetSongFromSession(Request $request)
+    {
+        $request->session()->forget('name');
+        return redirect('/lists');
+    }
 }

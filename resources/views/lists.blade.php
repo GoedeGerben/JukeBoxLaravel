@@ -10,8 +10,16 @@
     <a href="/genres">genres</a><br>
     <a href="/currentList">playing right now</a>
 
-    @foreach ($songs as $song)
-        <p>{{ $song }}</p>
-    @endforeach
+    @if ($songs)
+        <a href="">unsaved playlist</a>
+        <a href="/flushList">remove playlist</a>
+    @endif
+
+    @if ($songs)<!--songs moet lists worden-->
+        @foreach ($songs as $song)
+            <p>{{ $song }}</p>
+        @endforeach
+    @endif
+    
 </body>
 </html>

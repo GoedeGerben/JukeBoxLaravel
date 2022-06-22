@@ -58,5 +58,6 @@ Route::get('/currentList', function () {
 })->middleware('auth');
 
 Route::post('/addToList', [ListController::class, 'addToList'])->middleware('auth');
+Route::post('/flushList', [ListController::class, 'flushList'])->middleware('auth');
 Route::get('/lists', [ListController::class, 'showList'])->middleware('auth');
 
