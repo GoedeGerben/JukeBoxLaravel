@@ -59,5 +59,13 @@ Route::get('/currentList', function () {
 
 Route::post('/addToList', [ListController::class, 'addToList'])->middleware('auth');
 Route::post('/flushList', [ListController::class, 'flushList'])->middleware('auth');
+Route::post('/forget', [ListController::class, 'forgetSongFromSession'])->middleware('auth');
+
+Route::get('/saveList', function () {
+    return view('saveList');
+})->middleware('auth');
+Route::post('/saveList', [ListController::class, 'saveList'])->middleware('auth');
+
 Route::get('/lists', [ListController::class, 'showList'])->middleware('auth');
+
 
