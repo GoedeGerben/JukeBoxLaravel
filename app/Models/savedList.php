@@ -12,6 +12,7 @@ class savedList extends Model
     protected $fillable = [
         'name',
         'user_id',
+        'duration',
     ];
 
     public function savedListSong()

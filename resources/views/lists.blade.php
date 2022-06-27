@@ -11,22 +11,22 @@
     <a href="/currentList">playing right now</a><br>
 
     @if ($songs)
-        <a href="/currentList">unsaved playlist</a><br>
-        <a href="/saveList">save playlist</a>
-        <a href="/flushList">remove playlist</a>
+        <br>
+        <a href="/tempList">unsaved playlist</a>
+        <p>this playlist is {{ $duration }} seconds long</p>
     @endif
 
-    @if ($songs)<!--songs moet lists worden-->
-        @foreach ($songs as $song)
-            <p>{{ $song }}</p>
-            <form action="/forget" method="post">
-                @csrf
-                <input type="hidden" name="song_id" id="id" value="{{ $song }}"></input>
-                <button type="submit">Remove song from playlist</button>
+    @if ($lists)
+        @foreach ($lists as $list)
+            <br>
+            <form action="playList/{{ $list->name }}" method="post">
+            @csrf
+                <input type="hidden" name="list_id" value="{{ $list->id }}"></input>
+                <button type="submit">{{ $list->name }}</button>
             </form>
+            <p>this playlist is {{ $list->duration }} seconds long</p>
         @endforeach
     @endif
-    <p>{{ $duration }}</p>
     
 </body>
 </html>

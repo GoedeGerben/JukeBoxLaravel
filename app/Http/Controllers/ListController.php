@@ -24,14 +24,42 @@ class ListController extends Controller
         $newDuration = ($duration + $song->length);
         $request->session()->put('duration', $newDuration);
 
-        return redirect('/lists');
+        return redirect('/tempList');
     }
 
-    public function showList(Request $request/*, Song $time*/)
+    public function showList(Request $request)
     {
+        $lists = SavedList::get();
         $songs = $request->session()->get('songs.song');
         $duration = $request->session()->get('duration');
         return view('lists',[
+            'lists'=> $lists,
+            'songs'=> $songs,
+            'duration' => $duration
+        ]);
+    }
+
+    public function playList(Request $request, SavedList $savedList)
+    {
+        $list = SavedList::where('id', $request->list_id)->first();
+        $listSongs = SavedListSong::where('saved_list_id', $request->list_id)->get();
+        
+        $songs = array();
+        foreach ($listSongs as $listSong) {
+            array_push($songs, Song::where('id', $listSong->song_id)->first());
+        }
+
+        return view('playlist',[
+            'list'=> $list,
+            'songs'=> $songs,
+        ]);
+    }
+
+    public function tempList(Request $request)
+    {
+        $songs = $request->session()->get('songs.song');
+        $duration = $request->session()->get('duration');
+        return view('tempList',[
             'songs'=> $songs,
             'duration' => $duration
         ]);
@@ -63,10 +91,12 @@ class ListController extends Controller
     public function saveList(Request $request)
     {
         $id = Auth::id(); 
+        $duration = $request->session()->get('duration');
 
         $saved_list_id = SavedList::create([
             'name' => $request->name,
             'user_id' => $id,
+            'duration' => $duration,
         ])->id;
 
         $songs = $request->session()->get('songs.song');

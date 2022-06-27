@@ -17,6 +17,7 @@ class CreateSavedListsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('user_id');
+            $table->integer('duration');
             $table->timestamps();
         });
     }
