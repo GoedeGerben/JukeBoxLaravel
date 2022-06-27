@@ -15,7 +15,7 @@ class SongsTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=2; $i < 12; $i++) { 
+        for ($i=2; $i < 800; $i++) { 
             DB::table('songs')->insert([
             'name' => Str::random(10),
             'length' => rand(30,500),

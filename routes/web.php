@@ -58,7 +58,7 @@ Route::get('/currentList', function () {
 })->middleware('auth');
 
 Route::post('/addToList', [ListController::class, 'addToList'])->middleware('auth');
-Route::post('/flushList', [ListController::class, 'flushList'])->middleware('auth');
+Route::get('/flushList', [ListController::class, 'flushList'])->middleware('auth');
 Route::post('/forget', [ListController::class, 'forgetSongFromSession'])->middleware('auth');
 
 Route::get('/saveList', function () {

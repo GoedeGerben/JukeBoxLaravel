@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class savedList extends Model
+class savedListSong extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
-        'name',
-        'user_id',
+        'saved_list_id',
+        'song_id',
     ];
 
-    public function savedListSong()
+    public function savedList()
     {
-        return $this->hasMany(SavedListSong::class);
+        return $this->belongsTo(SavedList::class);
     }
 }

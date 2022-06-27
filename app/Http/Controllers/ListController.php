@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Song;
+use App\Models\SavedList;
+use App\Models\SavedListSong;
 
 class ListController extends Controller
 {
@@ -59,7 +62,20 @@ class ListController extends Controller
 
     public function saveList(Request $request)
     {
+        $id = Auth::id(); 
+
+        $saved_list_id = SavedList::create([
+            'name' => $request->name,
+            'user_id' => $id,
+        ])->id;
+
         $songs = $request->session()->get('songs.song');
+        foreach($songs as $song){
+            SavedListSong::create([
+                'saved_list_id' => $saved_list_id,
+                'song_id' => $song,
+            ]);
+        }
         return redirect('/flushList');
     }
 }

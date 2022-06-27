@@ -11,13 +11,9 @@
     <a href="/currentList">playing right now</a><br>
 
     @if ($songs)
-        <a href="/currentList">unsaved playlist</a>
+        <a href="/currentList">unsaved playlist</a><br>
         <a href="/saveList">save playlist</a>
-        <form action="/flushList" method="post">
-            @csrf
-            <input type="hidden" name="session" value="session"></input>
-            <button type="submit">remove playlist</button>
-        </form>
+        <a href="/flushList">remove playlist</a>
     @endif
 
     @if ($songs)<!--songs moet lists worden-->
