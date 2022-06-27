@@ -20,8 +20,11 @@ class ListController extends Controller
 
     public function showList(Request $request/*, Song $time*/)
     {
+        
         //$time = Song::get(); //voor de duration van een playlist poging
         $songs = $request->session()->get('songs.song');
+        //DD($songs);
+        //$request->session()->forget('songs.song');
         return view('lists',[
             'songs'=> $songs/*,
             'time' => $time*/
@@ -36,7 +39,12 @@ class ListController extends Controller
 
     public function forgetSongFromSession(Request $request)
     {
-        $request->session()->pull('songs.song', $request->song_id);//een bepaalde songs.song moet worden vergeten
+        $songs = $request->session()->get('songs.song');
+        $request->session()->forget('songs.song');
+        $songs = \array_diff($songs, [$request->song_id]);
+        foreach($songs as $song){
+            $request->session()->push('songs.song', $song);
+        }
         return redirect('/lists');
     }
 
