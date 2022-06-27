@@ -13,7 +13,11 @@
     @if ($songs)
         <a href="/currentList">unsaved playlist</a>
         <a href="/saveList">save playlist</a>
-        <a href="/flushList">remove playlist</a>
+        <form action="/flushList" method="post">
+            @csrf
+            <input type="hidden" name="session" value="session"></input>
+            <button type="submit">remove playlist</button>
+        </form>
     @endif
 
     @if ($songs)<!--songs moet lists worden-->
@@ -26,6 +30,7 @@
             </form>
         @endforeach
     @endif
+    <p>{{ $duration }}</p>
     
 </body>
 </html>
