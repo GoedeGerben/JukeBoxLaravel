@@ -17,14 +17,27 @@ class ListController extends Controller
 
     public function addToList(Request $request)
     {
-        $song = Song::where('id', $request->song_id)->first();
+        $songToAdd = Song::where('id', $request->song_id)->first();
+        $songs = $request->session()->get('songs.song');
         
         if($request->list == 'session'){
-            $request->session()->push('songs.song', $request->song_id);
+            $greenlight = true;
+            foreach($songs as $song){
+                if($song == $request->song_id){
+                    $greenlight = false;
+                }
 
-            $duration = $request->session()->get('duration');
-            $newDuration = ($duration + $song->length);
-            $request->session()->put('duration', $newDuration);
+            }
+            if($greenlight == true) {
+                $songs = $request->session()->get('songs.song');
+                
+                $request->session()->push('songs.song', $request->song_id);
+
+                $duration = $request->session()->get('duration');
+                $newDuration = ($duration + $songToAdd->length);
+                $request->session()->put('duration', $newDuration);
+            }
+            return redirect('/tempList');
         }else{
             SavedListSong::create([
                 'saved_list_id' => $request->list,
@@ -92,11 +105,6 @@ class ListController extends Controller
 
 
         return redirect('/lists');
-    }
-
-    public function addSongToPlayList(Request $request)
-    {
-
     }
 
     public function tempList(Request $request)
