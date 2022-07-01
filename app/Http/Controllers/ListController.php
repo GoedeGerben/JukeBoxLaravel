@@ -55,6 +55,38 @@ class ListController extends Controller
         ]);
     }
 
+    public function removePlayList(Request $request)
+    {//playlist plus alle saved_list_songs van de playlists
+        SavedList::where('saved_list_id',$request->list_id)->delete();
+        SavedListSong::where('saved_list_id',$request->list_id)->delete();
+        return redirect('/lists');
+    }
+
+    public function editPlayList(Request $request)
+    {
+        return redirect('/lists');
+    }
+
+    public function removePlayListSong(Request $request)
+    {
+        //edit duration
+        $song = Song::where('id', $request->song_id)->first();
+        $list = SavedList::where('id', $request->list_id)->first();
+        $newduration = $list->duration - $song->length;
+        SavedList::where('id', $request->list_id)->update(['duration' => $newduration]);
+
+        //remove song
+        SavedListSong::where('saved_list_id', $request->list_id)->where('song_id', $request->song_id)->delete();
+
+
+        return redirect('/lists');
+    }
+
+    public function addSongToPlayList(Request $request)
+    {
+
+    }
+
     public function tempList(Request $request)
     {
         $songs = $request->session()->get('songs.song');

@@ -55,6 +55,11 @@ Route::get('/genres', [GenreController::class, 'index'])->middleware('auth');
 
 Route::get('/tempList', [ListController::class, 'tempList'])->middleware('auth');
 Route::post('/playList/{list:name}', [ListController::class, 'playList'])->middleware('auth');
+Route::post('/removePlayList', [ListController::class, 'removePlayList'])->middleware('auth');
+Route::post('/removePlayListSong', [ListController::class, 'removePlayListSong'])->middleware('auth');
+Route::get('/editPlayList', [ListController::class, 'editPlayList'])->middleware('auth');
+Route::post('/editPlayList', [ListController::class, 'editPlayList'])->middleware('auth');
+
 Route::post('/addToList', [ListController::class, 'addToList'])->middleware('auth');
 Route::get('/flushList', [ListController::class, 'flushList'])->middleware('auth');
 Route::post('/forget', [ListController::class, 'forgetSongFromSession'])->middleware('auth');

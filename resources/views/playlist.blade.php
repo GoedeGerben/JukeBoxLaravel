@@ -8,17 +8,19 @@
     <a href="/logout">log out</a><br>
     <a href="/home">Home Page</a><br>
     <a href="/lists">your lists</a><br>
-    <a href="/">remove playlist</a>
+    <a href="/removePlayList">remove playlist</a>
+    <a href="/editPlayList">rename playlist</a>
 
     @foreach ($songs as $song)
         <p>{{ $song->name }}</p>
         <p>{{ $song->length }}</p>
-        <form action="/" method="post">
+        <form action="/removePlayListSong" method="post">
             @csrf
             <input type="hidden" name="song_id" id="id" value="{{ $song->id }}"></input>
+            <input type="hidden" name="list_id" id="id" value="{{ $list->id }}"></input>
             <button type="submit">Remove song from playlist</button>
         </form>
     @endforeach
-    <p>{{ $list->duration }}</p>
+    <p>totale playlist duur: {{ $list->duration }}</p>
 </body>
 </html>
