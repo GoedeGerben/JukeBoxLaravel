@@ -47,10 +47,6 @@ Route::get('/genre/{genre:name}', [SongController::class, 'index'])->middleware(
 
 Route::get('/song/{song:name}', [SongController::class, 'song'])->middleware('auth');
 
-Route::get('/lists', function () {
-    return view('list');
-})->middleware('auth');
-
 Route::get('/genres', [GenreController::class, 'index'])->middleware('auth');
 
 Route::get('/tempList', [ListController::class, 'tempList'])->middleware('auth');

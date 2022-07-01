@@ -22,13 +22,15 @@ class ListController extends Controller
         
         if($request->list == 'session'){
             $greenlight = true;
-            foreach($songs as $song){
-                if($song == $request->song_id){
-                    $greenlight = false;
-                }
+            if(!is_null($songs)){
+                foreach($songs as $song){
+                    if($song == $request->song_id){
+                        $greenlight = false;
+                    }
 
+                }
             }
-            if($greenlight == true) {
+            if($greenlight == true || is_null($songs)) {
                 $songs = $request->session()->get('songs.song');
                 
                 $request->session()->push('songs.song', $request->song_id);
@@ -53,7 +55,7 @@ class ListController extends Controller
 
     public function showList(Request $request)
     {
-        $lists = SavedList::get();
+        $lists = SavedList::where('user_id', Auth::user()->id)->get();
         $songs = $request->session()->get('songs.song');
         $duration = $request->session()->get('duration');
         return view('lists',[
