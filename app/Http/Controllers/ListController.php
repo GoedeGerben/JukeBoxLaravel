@@ -64,6 +64,7 @@ class ListController extends Controller
 
     public function editPlayList(Request $request)
     {
+        SavedList::where('id', $request->list_id)->update(['name' => $request->name]);
         return redirect('/lists');
     }
 
@@ -79,7 +80,7 @@ class ListController extends Controller
         SavedListSong::where('saved_list_id', $request->list_id)->where('song_id', $request->song_id)->delete();
 
 
-        return redirect('/lists');
+        return back();
     }
 
     public function addSongToPlayList(Request $request)

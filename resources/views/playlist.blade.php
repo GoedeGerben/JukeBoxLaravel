@@ -8,7 +8,12 @@
     <a href="/logout">log out</a><br>
     <a href="/home">Home Page</a><br>
     <a href="/lists">your lists</a><br>
-    <a href="/editPlayList">rename playlist</a>
+    <form action="/editPlayList" method="post">
+        @csrf
+        <input type="hidden" name="list_id" id="id" value="{{ $list->id }}"></input>
+        <input type="text" name="name" id="name" placeholder="new playlist name" value="{{ old('name') }}"></input>
+        <button type="submit">Rename playlist</button>
+    </form>
     <form action="/removePlayList" method="post">
         @csrf
         <input type="hidden" name="list_id" id="id" value="{{ $list->id }}"></input>
