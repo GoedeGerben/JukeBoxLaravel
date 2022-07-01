@@ -19,6 +19,12 @@
     <form action="/addToList" method="post">
         @csrf
         <input type="hidden" name="song_id" id="id" value="{{ $song->id }}"></input>
+        <select class="form-control" name="list">
+            <option value="session">temp list</option>
+            @foreach ($lists as $list)
+                <option value="{{ $list->id }}">{{$list->name}}</option>
+            @endforeach    
+        </select>
         <button type="submit">Add song to playlist</button>
     </form>
 </body>
