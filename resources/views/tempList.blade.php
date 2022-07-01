@@ -13,6 +13,11 @@
 
     @foreach ($songs as $song)
         <p>{{ $song }}</p>
+        @foreach ($names as $name)
+            @if($name->id == $song)
+                <p>{{ $name->name}}</p>
+            @endif
+        @endforeach
         <form action="/forget" method="post">
             @csrf
             <input type="hidden" name="song_id" id="id" value="{{ $song }}"></input>

@@ -103,9 +103,11 @@ class ListController extends Controller
     {
         $songs = $request->session()->get('songs.song');
         $duration = $request->session()->get('duration');
+        $names = Song::get();
         return view('tempList',[
             'songs'=> $songs,
-            'duration' => $duration
+            'duration' => $duration,
+            'names'=> $names
         ]);
     }
 
