@@ -57,7 +57,7 @@ class ListController extends Controller
 
     public function removePlayList(Request $request)
     {//playlist plus alle saved_list_songs van de playlists
-        SavedList::where('saved_list_id',$request->list_id)->delete();
+        SavedList::where('id',$request->list_id)->delete();
         SavedListSong::where('saved_list_id',$request->list_id)->delete();
         return redirect('/lists');
     }
