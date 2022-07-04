@@ -25,9 +25,4 @@ class SessionManager
     {
         $request->session()->forget($key);
     }
-
-    public function geFromSession(Request $request, $key)
-    {
-        return $request->session()->get($key);
-    }
 }
