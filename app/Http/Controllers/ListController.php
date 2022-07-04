@@ -27,7 +27,6 @@ class ListController extends Controller
                     if($song == $request->song_id){
                         $greenlight = false;
                     }
-
                 }
             }
             if($greenlight == true || is_null($songs)) {
@@ -46,7 +45,7 @@ class ListController extends Controller
                 'song_id' => $request->song_id,
             ]);
             $selectedList = SavedList::where('id', $request->list)->first();
-            $newDuration = ($selectedList->duration + $song->length);
+            $newDuration = ($selectedList->duration + $songToAdd->length);
             SavedList::where('id', $request->list)->update(['duration' => $newDuration]);
         }
 
