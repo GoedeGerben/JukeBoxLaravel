@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Song;
 use App\Models\SavedList;
 use App\Models\SavedListSong;
+use App\classes\SessionManager;
 
 class ListController extends Controller
 {
@@ -18,7 +19,8 @@ class ListController extends Controller
     public function addToList(Request $request)
     {
         $songToAdd = Song::where('id', $request->song_id)->first();
-        $songs = $request->session()->get('songs.song');
+        $sessionManager = new SessionManager();
+        $songs = $sessionManager->getFromSession($request, 'songs.song');
         
         if($request->list == 'session'){
             $greenlight = true;
@@ -30,13 +32,13 @@ class ListController extends Controller
                 }
             }
             if($greenlight == true || is_null($songs)) {
-                $songs = $request->session()->get('songs.song');
-                
-                $request->session()->push('songs.song', $request->song_id);
+                $songs = $sessionManager->getFromSession($request, 'songs.song');
 
-                $duration = $request->session()->get('duration');
+                $sessionManager->pushToSession($request, 'songs.song', $request->song_id);
+
+                $duration = $sessionManager->getFromSession($request, 'duration');
                 $newDuration = ($duration + $songToAdd->length);
-                $request->session()->put('duration', $newDuration);
+                $sessionManager->putInSession($request, 'duration', $newDuration);
             }
             return redirect('/tempList');
         }else{
@@ -54,9 +56,10 @@ class ListController extends Controller
 
     public function showList(Request $request)
     {
+        $sessionManager = new SessionManager();
         $lists = SavedList::where('user_id', Auth::user()->id)->get();
-        $songs = $request->session()->get('songs.song');
-        $duration = $request->session()->get('duration');
+        $songs = $sessionManager->getFromSession($request, 'songs.song');
+        $duration = $sessionManager->getFromSession($request, 'duration');
         return view('lists',[
             'lists'=> $lists,
             'songs'=> $songs,
@@ -109,9 +112,10 @@ class ListController extends Controller
     }
 
     public function tempList(Request $request)
-    {
-        $songs = $request->session()->get('songs.song');
-        $duration = $request->session()->get('duration');
+    {   
+        $sessionManager = new SessionManager();
+        $songs = $sessionManager->getFromSession($request, 'songs.song');
+        $duration = $sessionManager->getFromSession($request, 'duration');
         $names = Song::get();
         return view('tempList',[
             'songs'=> $songs,
@@ -122,31 +126,34 @@ class ListController extends Controller
 
     public function flushList(Request $request)
     {
-        $request->session()->forget('songs.song');
-        $request->session()->forget('duration');
+        $sessionManager = new SessionManager();
+        $sessionManager->forgetFromSession($request, 'songs.song');
+        $sessionManager->forgetFromSession($request, 'duration');
         return redirect('/lists');
     }
 
     public function forgetSongFromSession(Request $request)
     {
-        $songs = $request->session()->get('songs.song');
-        $request->session()->forget('songs.song');
+        $sessionManager = new SessionManager();
+        $songs = $sessionManager->getFromSession($request, 'songs.song');
+        $sessionManager->forgetFromSession($request, 'songs.song');
         $newSongs = \array_diff($songs, [$request->song_id]);
         foreach($newSongs as $song){
-            $request->session()->push('songs.song', $song);
+            $sessionManager->pushToSession($request, 'songs.song', $song);
         }
         $removedSong = array_diff($songs, $newSongs);
         $removedDuration = Song::where('id', $removedSong)->first();
-        $duration = $request->session()->get('duration');
+        $duration = $sessionManager->getFromSession($request, 'duration');
         $newDuration = ($duration - $removedDuration->length);
-        $request->session()->put('duration', $newDuration);
+        $sessionManager->putInSession($request, 'duration', $newDuration);
         return redirect('/lists');
     }
 
     public function saveList(Request $request)
     {
+        $sessionManager = new SessionManager();
         $id = Auth::id(); 
-        $duration = $request->session()->get('duration');
+        $duration = $sessionManager->getFromSession($request, 'duration');
 
         $saved_list_id = SavedList::create([
             'name' => $request->name,
@@ -154,7 +161,7 @@ class ListController extends Controller
             'duration' => $duration,
         ])->id;
 
-        $songs = $request->session()->get('songs.song');
+        $songs = $sessionManager->getFromSession($request, 'songs.song');
         foreach($songs as $song){
             SavedListSong::create([
                 'saved_list_id' => $saved_list_id,
